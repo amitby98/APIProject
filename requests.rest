@@ -1,0 +1,52 @@
+
+
+### Create a new post
+POST http://localhost:8080/posts/
+Content-Type: application/json
+
+{
+  "title": "First post Check!",
+  "content": "First content",
+  "userId": "675e9a33494eeb1eff9a1684"
+}
+ 
+### Update a post
+PUT http://localhost:8080/posts/676451710122484c0ea5ade9
+Content-Type: application/json
+
+{
+  "title": "First post updated",
+  "content": "First content updated!!!!"
+}
+### Get all posts
+GET http://localhost:8080/posts/all
+### Get a post by id
+GET http://localhost:8080/posts/676451710122484c0ea5ade9
+### Get all posts from a user
+GET http://localhost:8080/posts?sender=675e9a33494eeb1eff9a1684
+
+### Create new comment
+POST http://localhost:8080/comments/676451710122484c0ea5ade9
+Content-Type: application/json
+
+{
+  "content": "First comment for the first post",
+  "userId": "675e9a33494eeb1eff9a1684"
+}
+
+### Update a comment
+PUT http://localhost:8080/comments/675e9c736ccd54cd6e02506c
+Content-Type: application/json
+
+{
+  "content": "First comment updated"
+}
+
+### Get Comment by id
+GET http://localhost:8080/comments/single/675e9c736ccd54cd6e02506c
+
+### Delete a comment
+DELETE http://localhost:8080/comments/675e9d571a090d6b23913c7a
+
+### Get all comments for a post
+GET http://localhost:8080/comments/675e9a5b76fb292ea8671dc8
