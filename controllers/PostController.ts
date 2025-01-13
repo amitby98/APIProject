@@ -63,7 +63,8 @@ export async function getPostById(req: Request, res: Response) {
 
 export async function addPost(req: Request, res: Response) {
   try {
-    const { userId, content, title } = req.body;
+    const { id: userId } = req.user;
+    const { content, title } = req.body;
 
     const date = new Date();
     const post = await PostModel.create({

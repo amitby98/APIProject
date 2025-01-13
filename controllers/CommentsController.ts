@@ -47,7 +47,8 @@ export async function getPostComments(req: Request, res: Response) {
 export async function addComment(req: Request, res: Response) {
   try {
     const postId = req.params.postId;
-    const { userId, content } = req.body;
+    const { id: userId } = req.user;
+    const { content } = req.body;
 
     const date = new Date();
     const comment = await CommentModel.create({

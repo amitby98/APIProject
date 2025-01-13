@@ -7,6 +7,7 @@ export interface User {
   email: string;
   password: string;
   posts: ObjectId[];
+  refresh_token: string;
   comparePassword: (password: string) => boolean;
 }
 
@@ -18,6 +19,9 @@ const UserSchema = new mongoose.Schema<User>({
     type: String,
   },
   password: {
+    type: String,
+  },
+  refresh_token: {
     type: String,
   },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "posts" }],
