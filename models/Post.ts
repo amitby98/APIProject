@@ -1,6 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-const PostSchema = new mongoose.Schema({
+export interface Post {
+  _id: string;
+  title: string;
+  content: string;
+  date: Date;
+  comments: ObjectId[];
+  user: ObjectId;
+}
+
+const PostSchema = new mongoose.Schema<Post>({
   title: {
     type: String,
   },

@@ -1,7 +1,7 @@
 import express from "express";
-import connectToDatabase from "./db.js";
-import postsRouter from "./routes/PostRouter.js";
-import commentsRouter from "./routes/CommentsRouter.js";
+import connectToDatabase from "./db";
+import postsRouter from "./routes/PostRouter";
+import commentsRouter from "./routes/CommentsRouter";
 
 const app = express();
 app.use(express.json());

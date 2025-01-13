@@ -1,6 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-const CommentSchema = new mongoose.Schema({
+export interface Comment {
+  _id: string;
+  content: string;
+  date: Date;
+  post: ObjectId;
+  user: ObjectId;
+}
+const CommentSchema = new mongoose.Schema<Comment>({
   content: {
     type: String,
   },

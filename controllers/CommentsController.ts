@@ -1,19 +1,20 @@
+import { Request, Response } from "express";
 import CommentModel from "../models/Comment.js";
 import PostModel from "../models/Post.js";
 
-export async function getCommentById(req, res) {
+export async function getCommentById(req: Request, res: Response) {
   const commentId = req.params.commentId;
 
   try {
     const comment = await CommentModel.findById(commentId);
-    return res.status(200).json({
+    res.status(200).json({
       data: comment,
       status: 200,
       error: null,
       message: "Comment fetched successfully",
     });
-  } catch (e) {
-    return res.status(400).json({
+  } catch (e: any) {
+    res.status(400).json({
       data: null,
       status: 400,
       error: e.message,
@@ -22,19 +23,19 @@ export async function getCommentById(req, res) {
   }
 }
 
-export async function getPostComments(req, res) {
+export async function getPostComments(req: Request, res: Response) {
   const postId = req.params.postId;
 
   try {
     const comments = await CommentModel.find({ post: postId });
-    return res.status(200).json({
+    res.status(200).json({
       data: comments,
       status: 200,
       error: null,
       message: "Comments fetched successfully",
     });
-  } catch (e) {
-    return res.status(400).json({
+  } catch (e: any) {
+    res.status(400).json({
       data: null,
       status: 400,
       error: e.message,
@@ -43,7 +44,7 @@ export async function getPostComments(req, res) {
   }
 }
 
-export async function addComment(req, res) {
+export async function addComment(req: Request, res: Response) {
   try {
     const postId = req.params.postId;
     const { userId, content } = req.body;
@@ -57,14 +58,14 @@ export async function addComment(req, res) {
     });
     await PostModel.findByIdAndUpdate(postId, { $push: { comments: comment._id } });
 
-    return res.status(201).json({
+    res.status(201).json({
       data: comment,
       status: 201,
       error: null,
       message: "Comment created successfully",
     });
-  } catch (e) {
-    return res.status(400).json({
+  } catch (e: any) {
+    res.status(400).json({
       data: null,
       status: 400,
       error: e.message,
@@ -73,21 +74,21 @@ export async function addComment(req, res) {
   }
 }
 
-export async function updateComment(req, res) {
+export async function updateComment(req: Request, res: Response) {
   try {
     const commentId = req.params.postId;
     const { content } = req.body;
 
     const comment = await CommentModel.findByIdAndUpdate(commentId, { content }, { returnOriginal: false });
 
-    return res.status(200).json({
+    res.status(200).json({
       data: comment,
       status: 200,
       error: null,
       message: "Comment updated successfully",
     });
-  } catch (e) {
-    return res.status(400).json({
+  } catch (e: any) {
+    res.status(400).json({
       data: null,
       status: 400,
       error: e.message,
@@ -96,21 +97,30 @@ export async function updateComment(req, res) {
   }
 }
 
-export async function deleteComment(req, res) {
+export async function deleteComment(req: Request, res: Response) {
   try {
     const commentId = req.params.commentId;
 
     const comment = await CommentModel.findByIdAndDelete(commentId, { returnOriginal: true });
+    if (!comment) {
+      res.status(404).json({
+        data: null,
+        status: 404,
+        error: "Comment not found",
+        message: "Error occurred",
+      });
+      return;
+    }
     await PostModel.findByIdAndUpdate(comment.post, { $pull: { comments: commentId } });
 
-    return res.status(200).json({
+    res.status(200).json({
       data: comment,
       status: 200,
       error: null,
       message: "Comment deleted successfully",
     });
-  } catch (e) {
-    return res.status(400).json({
+  } catch (e: any) {
+    res.status(400).json({
       data: null,
       status: 400,
       error: e.message,

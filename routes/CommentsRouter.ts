@@ -1,5 +1,5 @@
 import express from "express";
-import * as CommentsController from "../controllers/CommentsController.js";
+import * as CommentsController from "../controllers/CommentsController";
 const router = express.Router();
 
 router.post("/:postId", CommentsController.addComment);
